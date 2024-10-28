@@ -1,8 +1,14 @@
+import "./App.css"
+import Navbar from "./components/Navbar"
+import SquareContent from "./components/square/SquareContent"
+
 function App() {
 
   return (
     <>
-      Hello
+      <h1 className="title">Square maker</h1>
+      <Navbar />
+      <SquareContent />
     </>
   )
 }

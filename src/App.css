@@ -1,0 +1,4 @@
+.title {
+    grid-column: span 2;
+    text-align: center;
+}
