@@ -1,10 +1,11 @@
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import { useContext } from 'react';
-import { getKeyFromImageUrl, SquareContext } from '../../contexts/squareContext';
-import { SquareData, SquareDataKey } from '../../types';
+import { SquareContext } from '../../contexts/squareContext';
+import { SquareDataKey } from '../../types';
 import Droppable from './Droppable';
 import "./SquareContent.css";
 import StagingArea from './StagingArea';
+import { generateSquareData } from './squareUtils';
 
 
 
@@ -70,35 +71,7 @@ function SquareContent() {
     }
 }
 
-function generateSquareData(previousSquareData: SquareData, movedItemId: string | number, movedItemNewLocation: SquareDataKey): SquareData {
-    if (typeof movedItemId === "number") {
-        return previousSquareData
-    }
-    if (movedItemNewLocation !== "stagingArea" && movedItemNewLocation !== "deleteZone" && previousSquareData[movedItemNewLocation]) {
-        // Cannot drop into zone which already contains an image
-        return previousSquareData
-    }
 
-    const itemOriginalLocation = getKeyFromImageUrl(movedItemId, previousSquareData)
-    if (itemOriginalLocation === null) {
-        return previousSquareData
-    }
-    if (itemOriginalLocation === movedItemNewLocation) {
-        return previousSquareData
-    }
-    if (itemOriginalLocation === "stagingArea") {
-        const stagingAreaIndex = previousSquareData.stagingArea.findIndex(x => x.imageUrl === movedItemId)
-        if (stagingAreaIndex >= 0) {
-            const newStagingArea = previousSquareData.stagingArea.toSpliced(stagingAreaIndex, 1)
-            return { ...previousSquareData, [movedItemNewLocation]: { imageUrl: movedItemId }, stagingArea: newStagingArea }
-        }
-    }
-    if (movedItemNewLocation === "stagingArea") {
-        const newStagingArea = [...previousSquareData.stagingArea, { imageUrl: movedItemId }]
-        return { ...previousSquareData, stagingArea: newStagingArea, [itemOriginalLocation]: null }
-    }
-    return { ...previousSquareData, [movedItemNewLocation]: { imageUrl: movedItemId }, [itemOriginalLocation]: null }
-}
 
 
 

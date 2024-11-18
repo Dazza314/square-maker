@@ -1,6 +1,6 @@
 import { createContext, Dispatch, PropsWithChildren, SetStateAction, useEffect, useMemo } from "react";
+import { getKeyFromImageUrl } from "../components/square/squareUtils";
 import { SquareData } from "../types";
-import { Range } from "../utilTypes";
 
 
 export function generateEmptySquareData(): SquareData {
@@ -109,15 +109,3 @@ function addNewImage(prevSquareData: SquareData, imageUrl: string) {
     return ({ ...prevSquareData, stagingArea: [...prevSquareData.stagingArea, { imageUrl }] })
 }
 
-export function getKeyFromImageUrl(imageUrl: string, square: SquareData): (keyof SquareData) | null {
-    for (let i = 0; i < 30; i++) {
-        const j = i as Range<0, 29>[number];
-        if (square[j]?.imageUrl === imageUrl) {
-            return j;
-        }
-    }
-    if (square.stagingArea.some(itemInfo => itemInfo.imageUrl === imageUrl)) {
-        return "stagingArea"
-    }
-    return null
-}
