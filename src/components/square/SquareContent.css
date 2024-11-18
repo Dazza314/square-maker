@@ -9,6 +9,8 @@
     grid-template-columns: repeat(24, 40px);
     grid-template-rows: repeat(24, 40px);
 
+    /* To avoid right borders being cut off by html-to-img */
+    margin-right: 2px;
 
     >div {
         border: 1px solid white;
