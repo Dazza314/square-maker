@@ -1,6 +1,6 @@
 .navbar {
     padding: 0 1em;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
     gap: 1em;
 }
