@@ -8,8 +8,7 @@ function SquareContent() {
     const viewportHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
     const gridCellSize = Math.floor((viewportHeight - 140) / 24)
 
-    return <div className='main-content'>
-
+    return <>
         <div id="printCapture" className='square-content' style={{
             gridTemplateColumns: `repeat(24, ${gridCellSize}px)`, gridTemplateRows: `repeat(24, ${gridCellSize}px)`
         }}>
@@ -45,7 +44,7 @@ function SquareContent() {
             <Droppable dropId={29} />
         </div>
         <StagingArea />
-    </div>
+    </>
 
 
 
