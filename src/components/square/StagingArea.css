@@ -2,10 +2,14 @@
     display: grid;
     grid-template-rows: auto 1fr;
 
-    padding: 1em;
+    padding: 0 1em 1em;
 }
 
 .staging-area-content {
+    border: 1px dashed white;
+    border-radius: 1em;
+    padding: 1em;
+
     img {
         height: 200px;
     }

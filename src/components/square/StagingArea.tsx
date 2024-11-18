@@ -19,9 +19,9 @@ function StagingArea() {
 
     return (
         <div className="staging-area-container">
-            Staging area
+            <h3>Extra images</h3>
             <div className="staging-area-content" ref={setNodeRef} style={style}>
-                {itemInfos.map((itemInfo) => (<DraggableImage key={itemInfo.imageUrl} imageUrl={itemInfo.imageUrl} />))}
+                {itemInfos.length === 0 ? "Drop or paste images here" : itemInfos.map((itemInfo) => (<DraggableImage key={itemInfo.imageUrl} imageUrl={itemInfo.imageUrl} />))}
             </div>
         </div>
     );
