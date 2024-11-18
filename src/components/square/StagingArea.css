@@ -1,3 +1,10 @@
+.staging-area-container {
+    display: grid;
+    grid-template-rows: auto 1fr;
+
+    padding: 1em;
+}
+
 .staging-area-content {
     img {
         height: 200px;

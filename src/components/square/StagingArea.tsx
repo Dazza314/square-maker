@@ -18,7 +18,7 @@ function StagingArea() {
     const itemInfos = squareData.stagingArea
 
     return (
-        <div>
+        <div className="staging-area-container">
             Staging area
             <div className="staging-area-content" ref={setNodeRef} style={style}>
                 {itemInfos.map((itemInfo) => (<DraggableImage key={itemInfo.imageUrl} imageUrl={itemInfo.imageUrl} />))}
