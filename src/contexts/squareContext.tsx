@@ -63,7 +63,7 @@ export function SquareContentProvider({ squareData, setSquareData, children }: P
         return () => {
             window.removeEventListener("paste", pasteListener)
         }
-    })
+    }, [])
 
     const value = useMemo(() => ({
         squareData, setSquareData
