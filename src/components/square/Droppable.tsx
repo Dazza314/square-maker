@@ -24,7 +24,7 @@ function Droppable({ dropId }: Props) {
     const showBorder = isOver && !(itemInfo && !isOverSelf)
 
     const style: CSSProperties = {
-        border: showBorder ? "1px solid #C5D3E8" : undefined
+        outline: showBorder ? "1px solid #C5D3E8" : undefined
     };
 
     return (
