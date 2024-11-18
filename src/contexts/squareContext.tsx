@@ -52,8 +52,12 @@ export function SquareContentProvider({ squareData, setSquareData, children }: P
         function pasteListener(e: ClipboardEvent) {
             for (const dataTransferItem of e.clipboardData?.items ?? []) {
                 if (dataTransferItem.type === "text/plain") {
-                    //TODO validation
-                    dataTransferItem.getAsString(x => setSquareData(prev => ({ ...prev, stagingArea: [...prev.stagingArea, { imageUrl: x }] })))
+                    dataTransferItem.getAsString(x => {
+                        if (x.match(/^https?:\/\/.+\.(png|jpg|jpeg|bmp|gif|webp)$/)) {
+                            setSquareData(prev => ({ ...prev, stagingArea: [...prev.stagingArea, { imageUrl: x }] }))
+                        }
+                    }
+                    )
                 }
             }
         }
