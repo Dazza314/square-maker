@@ -1,8 +1,7 @@
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import { useContext } from 'react';
-import { SquareContext } from '../../contexts/squareContext';
+import { getKeyFromImageUrl, SquareContext } from '../../contexts/squareContext';
 import { SquareData } from '../../types';
-import { Range } from "../../utilTypes";
 import Droppable from './Droppable';
 import "./SquareContent.css";
 import StagingArea from './StagingArea';
@@ -69,7 +68,10 @@ function generateSquareData(previousSquareData: SquareData, movedItemId: string 
     if (typeof movedItemId === "number") {
         return previousSquareData
     }
-    const itemOriginalLocation = findOriginalLocation(movedItemId, previousSquareData)
+    const itemOriginalLocation = getKeyFromImageUrl(movedItemId, previousSquareData)
+    if (itemOriginalLocation === null) {
+        return previousSquareData
+    }
     if (itemOriginalLocation === movedItemNewLocation) {
         return previousSquareData
     }
@@ -87,14 +89,6 @@ function generateSquareData(previousSquareData: SquareData, movedItemId: string 
     return { ...previousSquareData, [movedItemNewLocation]: { imageUrl: movedItemId }, [itemOriginalLocation]: null }
 }
 
-function findOriginalLocation(imageUrl: string, square: SquareData): keyof SquareData {
-    for (let i = 0; i < 30; i++) {
-        const j = i as Range<0, 29>[number];
-        if (square[j]?.imageUrl === imageUrl) {
-            return j;
-        }
-    }
-    return "stagingArea"
-}
+
 
 export default SquareContent

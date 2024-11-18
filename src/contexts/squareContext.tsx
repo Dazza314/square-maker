@@ -1,5 +1,6 @@
 import { createContext, Dispatch, PropsWithChildren, SetStateAction, useEffect, useMemo } from "react";
 import { SquareData } from "../types";
+import { Range } from "../utilTypes";
 
 
 export function generateEmptySquareData(): SquareData {
@@ -52,9 +53,9 @@ export function SquareContentProvider({ squareData, setSquareData, children }: P
         function pasteListener(e: ClipboardEvent) {
             for (const dataTransferItem of e.clipboardData?.items ?? []) {
                 if (dataTransferItem.type === "text/plain") {
-                    dataTransferItem.getAsString(x => {
-                        if (x.match(/^https?:\/\/.+\.(png|jpg|jpeg|bmp|gif|webp)$/)) {
-                            setSquareData(prev => ({ ...prev, stagingArea: [...prev.stagingArea, { imageUrl: x }] }))
+                    dataTransferItem.getAsString(imageUrl => {
+                        if (imageUrl.match(/^https?:\/\/.+\.(png|jpg|jpeg|bmp|gif|webp)$/)) {
+                            setSquareData(prev => addNewImage(prev, imageUrl))
                         }
                     }
                     )
@@ -67,7 +68,7 @@ export function SquareContentProvider({ squareData, setSquareData, children }: P
             e.preventDefault();
             const imageUrl = e.dataTransfer?.getData('URL');
             if (imageUrl) {
-                setSquareData(prev => ({ ...prev, stagingArea: [...prev.stagingArea, { imageUrl: imageUrl }] }))
+                setSquareData(prev => addNewImage(prev, imageUrl))
             }
         }
 
@@ -100,3 +101,23 @@ export function SquareContentProvider({ squareData, setSquareData, children }: P
     </SquareContext.Provider>
 }
 
+function addNewImage(prevSquareData: SquareData, imageUrl: string) {
+    const existingKey = getKeyFromImageUrl(imageUrl, prevSquareData)
+    if (existingKey !== null) {
+        return prevSquareData
+    }
+    return ({ ...prevSquareData, stagingArea: [...prevSquareData.stagingArea, { imageUrl }] })
+}
+
+export function getKeyFromImageUrl(imageUrl: string, square: SquareData): (keyof SquareData) | null {
+    for (let i = 0; i < 30; i++) {
+        const j = i as Range<0, 29>[number];
+        if (square[j]?.imageUrl === imageUrl) {
+            return j;
+        }
+    }
+    if (square.stagingArea.some(itemInfo => itemInfo.imageUrl === imageUrl)) {
+        return "stagingArea"
+    }
+    return null
+}
