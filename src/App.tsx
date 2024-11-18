@@ -16,15 +16,13 @@ function App() {
   const [activeId, setActiveId] = useState<string | number | null>(null);
 
   return (
-    <>
+    <SquareContentProvider
+      squareData={squareData} setSquareData={setSquareData}
+    >
       <h1 className="title">Square maker</h1>
       <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd} autoScroll={false}>
         <Navbar />
-        <SquareContentProvider
-          squareData={squareData} setSquareData={setSquareData}
-        >
-          <SquareContent />
-        </SquareContentProvider>
+        <SquareContent />
         <DragOverlay
           dropAnimation={null}
         >
@@ -33,7 +31,8 @@ function App() {
           ) : null}
         </DragOverlay>
       </DndContext>
-    </>
+    </SquareContentProvider>
+
   )
 
   function handleDragEnd(event: DragEndEvent) {

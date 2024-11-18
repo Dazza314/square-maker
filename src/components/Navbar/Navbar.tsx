@@ -1,5 +1,7 @@
 import { useDndContext } from "@dnd-kit/core";
 import CopySquareToClipboardButton from "./CopySquareToClipboard";
+import DeleteAllButton from "./DeleteAllButton";
+import DeleteAllExtraImagesButton from "./DeleteAllExtraImagesButton";
 import DeleteZone from "./DeleteZone";
 import DownloadSquareButton from "./DownloadSquareButton";
 import "./Navbar.css";
@@ -9,6 +11,8 @@ function Navbar() {
     return <div className="navbar">
         <DownloadSquareButton />
         <CopySquareToClipboardButton />
+        <DeleteAllButton />
+        <DeleteAllExtraImagesButton />
         {active ? <DeleteZone /> : null}
     </div>
 }
