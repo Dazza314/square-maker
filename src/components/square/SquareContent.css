@@ -1,7 +1,7 @@
 .main-content {
     display: grid;
     grid-template-columns: auto minmax(200px, 1fr);
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
 }
 
 .square-content {
