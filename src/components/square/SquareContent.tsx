@@ -1,7 +1,7 @@
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import { useContext } from 'react';
 import { getKeyFromImageUrl, SquareContext } from '../../contexts/squareContext';
-import { SquareData } from '../../types';
+import { SquareData, SquareDataKey } from '../../types';
 import Droppable from './Droppable';
 import "./SquareContent.css";
 import StagingArea from './StagingArea';
@@ -61,7 +61,7 @@ function SquareContent() {
     function handleDragEnd(event: DragEndEvent) {
         setSquareData(prev => {
             if (event.over) {
-                return generateSquareData(prev, event.active.id, event.over.id as keyof SquareData)
+                return generateSquareData(prev, event.active.id, event.over.id as SquareDataKey)
             }
             else {
                 return prev
@@ -70,11 +70,11 @@ function SquareContent() {
     }
 }
 
-function generateSquareData(previousSquareData: SquareData, movedItemId: string | number, movedItemNewLocation: keyof SquareData): SquareData {
+function generateSquareData(previousSquareData: SquareData, movedItemId: string | number, movedItemNewLocation: SquareDataKey): SquareData {
     if (typeof movedItemId === "number") {
         return previousSquareData
     }
-    if (movedItemNewLocation !== "stagingArea" && previousSquareData[movedItemNewLocation]) {
+    if (movedItemNewLocation !== "stagingArea" && movedItemNewLocation !== "deleteZone" && previousSquareData[movedItemNewLocation]) {
         // Cannot drop into zone which already contains an image
         return previousSquareData
     }

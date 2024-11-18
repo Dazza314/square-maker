@@ -2,12 +2,12 @@
 import { useDroppable } from '@dnd-kit/core';
 import { CSSProperties, useContext } from 'react';
 import { SquareContext } from '../../contexts/squareContext';
-import { SquareData } from '../../types';
+import { SquareDataKey } from '../../types';
 import DraggableImage from './DraggableImage';
 import "./Droppable.css";
 
 type Props = {
-    dropId: Exclude<keyof SquareData, "stagingArea">
+    dropId: Exclude<SquareDataKey, "stagingArea" | "deleteZone">
 }
 
 function Droppable({ dropId }: Props) {

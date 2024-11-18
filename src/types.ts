@@ -9,3 +9,5 @@ export type SquareData =
     & {
         stagingArea: ItemInfo[]
     }
+
+export type SquareDataKey = keyof SquareData | "deleteZone"
