@@ -1,5 +1,6 @@
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent } from "@dnd-kit/core"
 import { useState } from "react"
+import { useSessionStorage } from "usehooks-ts"
 import "./App.css"
 import Navbar from "./components/Navbar/Navbar"
 import DraggingImage from "./components/square/DraggingImage"
@@ -8,8 +9,10 @@ import { generateSquareData } from "./components/square/squareUtils"
 import { generateEmptySquareData, SquareContentProvider } from "./contexts/squareContext"
 import { SquareData, SquareDataKey } from "./types"
 
+const DEFAULT_KEY = "square-maker-0"
+
 function App() {
-  const [squareData, setSquareData] = useState<SquareData>(generateEmptySquareData)
+  const [squareData, setSquareData] = useSessionStorage<SquareData>(DEFAULT_KEY, generateEmptySquareData)
   const [activeId, setActiveId] = useState<string | number | null>(null);
 
   return (
