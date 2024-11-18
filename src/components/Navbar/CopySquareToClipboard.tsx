@@ -7,7 +7,7 @@ function CopySquareToClipboardButton() {
         const square = document.getElementById("printCapture")
         if (square instanceof HTMLElement) {
             htmlToImage
-                .toBlob(square)
+                .toBlob(square, { backgroundColor: "#242424" })
                 .then((blob) => {
                     if (!blob) {
                         return
