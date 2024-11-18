@@ -3,7 +3,12 @@ import { generateEmptySquareData, SquareContext } from "../../contexts/squareCon
 
 function DeleteAllButton() {
     const { setSquareData } = useContext(SquareContext)
-    return <button onClick={() => { setSquareData(generateEmptySquareData()) }}>Delete all images</button>
+
+    function onClick() {
+        setSquareData(generateEmptySquareData())
+    }
+
+    return <button onClick={onClick}>Delete all images</button>
 }
 
 export default DeleteAllButton
