@@ -68,6 +68,11 @@ function generateSquareData(previousSquareData: SquareData, movedItemId: string 
     if (typeof movedItemId === "number") {
         return previousSquareData
     }
+    if (movedItemNewLocation !== "stagingArea" && previousSquareData[movedItemNewLocation]) {
+        // Cannot drop into zone which already contains an image
+        return previousSquareData
+    }
+
     const itemOriginalLocation = getKeyFromImageUrl(movedItemId, previousSquareData)
     if (itemOriginalLocation === null) {
         return previousSquareData
