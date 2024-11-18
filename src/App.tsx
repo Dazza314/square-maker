@@ -25,7 +25,9 @@ function App() {
         >
           <SquareContent />
         </SquareContentProvider>
-        <DragOverlay>
+        <DragOverlay
+          dropAnimation={null}
+        >
           {typeof activeId === "string" ? (
             <DraggingImage imageUrl={activeId} />
           ) : null}
