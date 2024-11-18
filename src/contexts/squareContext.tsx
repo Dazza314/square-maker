@@ -67,7 +67,7 @@ export function SquareContentProvider({ squareData, setSquareData, children }: P
             e.stopPropagation();
             e.preventDefault();
             const imageUrl = e.dataTransfer?.getData('URL');
-            if (imageUrl) {
+            if (imageUrl && imageUrl.match(/^https?:\/\/.+\.(png|jpg|jpeg|bmp|gif|webp)$/)) {
                 setSquareData(prev => addNewImage(prev, imageUrl))
             }
         }
