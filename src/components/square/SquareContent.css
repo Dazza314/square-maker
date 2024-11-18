@@ -7,8 +7,6 @@
 .square-content {
     display: grid;
     grid-auto-flow: column dense;
-    grid-template-columns: repeat(24, 40px);
-    grid-template-rows: repeat(24, 40px);
 
     gap: 1px;
 

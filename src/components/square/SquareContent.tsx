@@ -11,9 +11,17 @@ import StagingArea from './StagingArea';
 function SquareContent() {
     const { setSquareData } = useContext(SquareContext)
 
+    const viewportHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+
+    console.log(viewportHeight)
+
+    const gridCellSize = Math.floor((viewportHeight - 140) / 24)
+
     return <div className='main-content'>
         <DndContext onDragEnd={handleDragEnd} autoScroll={false}>
-            <div id="printCapture" className='square-content'>
+            <div id="printCapture" className='square-content' style={{
+                gridTemplateColumns: `repeat(24, ${gridCellSize}px)`, gridTemplateRows: `repeat(24, ${gridCellSize}px)`
+            }}>
                 <Droppable dropId={0} />
                 <Droppable dropId={1} />
                 <Droppable dropId={2} />
