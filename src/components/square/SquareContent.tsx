@@ -68,7 +68,6 @@ function generateSquareData(previousSquareData: SquareData, movedItemId: string 
         return previousSquareData
     }
     const itemOriginalLocation = findOriginalLocation(movedItemId, previousSquareData)
-    console.log(itemOriginalLocation, movedItemNewLocation)
     if (itemOriginalLocation === movedItemNewLocation) {
         return previousSquareData
     }
