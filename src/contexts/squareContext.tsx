@@ -62,10 +62,32 @@ export function SquareContentProvider({ squareData, setSquareData, children }: P
             }
         }
 
+        function dropListener(e: DragEvent) {
+            e.stopPropagation();
+            e.preventDefault();
+            const imageUrl = e.dataTransfer?.getData('URL');
+            if (imageUrl) {
+                setSquareData(prev => ({ ...prev, stagingArea: [...prev.stagingArea, { imageUrl: imageUrl }] }))
+            }
+        }
+
+        function noop(e: any) {
+            e.stopPropagation();
+            e.preventDefault();
+        }
+
         window.addEventListener("paste", pasteListener)
+        window.addEventListener("drop", dropListener, false)
+        window.addEventListener('dragenter', noop, false);
+        window.addEventListener('dragexit', noop, false);
+        window.addEventListener('dragover', noop, false);
 
         return () => {
             window.removeEventListener("paste", pasteListener)
+            window.removeEventListener("drop", dropListener)
+            window.removeEventListener('dragenter', noop);
+            window.removeEventListener('dragexit', noop);
+            window.removeEventListener('dragover', noop);
         }
     }, [])
 
