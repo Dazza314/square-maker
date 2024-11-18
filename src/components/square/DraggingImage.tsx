@@ -1,9 +1,13 @@
+import { getProxyUrl } from "./DraggableImage";
+
 type Props = {
     imageUrl: string
 }
 
 function DraggingImage({ imageUrl }: Props) {
-    return <img src={imageUrl} style={{ height: 200 }}
+    const proxyUrl = getProxyUrl(imageUrl);
+
+    return <img src={proxyUrl} style={{ height: 200 }}
     />
 }
 

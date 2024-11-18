@@ -11,10 +11,15 @@ function DraggableImage({ imageUrl }: Props) {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
     } : undefined;
 
+    const proxyUrl = getProxyUrl(imageUrl);
 
     return (
-        <img ref={setNodeRef} style={style} src={imageUrl} {...listeners} {...attributes} />
+        <img ref={setNodeRef} style={style} src={proxyUrl} {...listeners} {...attributes} />
     );
+}
+
+export function getProxyUrl(imageUrl: string) {
+    return `/api/proxy-image?url=${encodeURIComponent(imageUrl)}`;
 }
 
 export default DraggableImage
