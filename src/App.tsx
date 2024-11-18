@@ -1,6 +1,6 @@
 import { useState } from "react"
 import "./App.css"
-import Navbar from "./components/Navbar"
+import Navbar from "./components/Navbar/Navbar"
 import SquareContent from "./components/square/SquareContent"
 import { generateEmptySquareData, SquareContentProvider } from "./contexts/squareContext"
 import { SquareData } from "./types"
