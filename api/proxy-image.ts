@@ -18,7 +18,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Send the image data as the response
     res.send(response.data);
   } catch (error) {
-    console.error('Error fetching the image:', error.message);
+    if(typeof error ==="object" && error && "message" in error){
+      console.error('Error fetching the image:', error.message);
+    }
     res.status(500).send('Failed to fetch the image.');
   }
 }
