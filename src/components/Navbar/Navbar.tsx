@@ -4,7 +4,7 @@ import DeleteAllButton from "./DeleteAllButton";
 import DeleteAllExtraImagesButton from "./DeleteAllExtraImagesButton";
 import DeleteZone from "./DeleteZone";
 import DownloadSquareButton from "./DownloadSquareButton";
-import LoadFromClipboardButton from "./LoadFromClipboardButton";
+import ImportButton from "./ImportButton";
 import "./Navbar.css";
 import SaveToClipboardButton from "./SaveToClipboardButton";
 
@@ -16,7 +16,7 @@ function Navbar() {
         <DeleteAllButton />
         <DeleteAllExtraImagesButton />
         <SaveToClipboardButton />
-        <LoadFromClipboardButton />
+        <ImportButton />
         {active ? <DeleteZone /> : null}
     </div>
 }

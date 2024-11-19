@@ -2,9 +2,9 @@ import { useContext, useRef, useState } from "react"
 import { SquareContext } from "../../contexts/squareContext"
 import useDialog, { Dialog } from "../Dialog/Dialog"
 import { isSquareData } from "../square/squareUtils"
-import "./LoadFromClipboardButton.css"
+import "./ImportButton.css"
 
-function LoadFromClipboardButton() {
+function ImportButton() {
     const { setSquareData } = useContext(SquareContext)
     const [label, setLabel] = useState("Import")
 
@@ -51,4 +51,4 @@ function LoadFromClipboardButton() {
     </>
 }
 
-export default LoadFromClipboardButton
+export default ImportButton
