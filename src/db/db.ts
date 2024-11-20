@@ -1,8 +1,16 @@
 import { DB_NAME } from "./constants";
 
-export function openDatabase() {
+export function openDatabase(storeName: string) {
   return new Promise<IDBDatabase>((resolve, reject) => {
     const request = indexedDB.open(DB_NAME, 1);
+
+    request.onupgradeneeded = (event) => {
+      const target = event.target as IDBOpenDBRequest;
+      const db = target.result;
+      if (!db.objectStoreNames.contains(storeName)) {
+        db.createObjectStore(storeName, { keyPath: "id" });
+      }
+    };
 
     request.onsuccess = (event) => {
       const target = event.target as IDBOpenDBRequest;
