@@ -1,8 +1,7 @@
 import { useContext } from "react";
-import {
+import SquareDataContext, {
   generateEmptySquareData,
-  SquareDataContext,
-} from "../../contexts/squareDataContext";
+} from "../../contexts/SquareDataContext";
 import { deleteImages } from "../../db/imageStore";
 import { getAllImageIds } from "../square/squareUtils";
 

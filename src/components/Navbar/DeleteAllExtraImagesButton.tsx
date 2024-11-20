@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { SquareDataContext } from "../../contexts/squareDataContext";
+import SquareDataContext from "../../contexts/SquareDataContext";
 import { deleteImages } from "../../db/imageStore";
 import { getAllStagingAreaImageIds } from "../square/squareUtils";
 

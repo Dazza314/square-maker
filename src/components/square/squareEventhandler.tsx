@@ -1,5 +1,5 @@
 import { PropsWithChildren, useContext, useEffect } from "react";
-import { SquareDataContext } from "../../contexts/squareDataContext";
+import SquareDataContext from "../../contexts/SquareDataContext";
 import { storeImage } from "../../db/imageStore";
 import { SquareData } from "../../types";
 import { generateImageId, getKeyFromImageUrl } from "./squareUtils";

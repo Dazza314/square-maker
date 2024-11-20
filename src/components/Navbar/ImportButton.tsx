@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from "react";
-import { SquareDataContext } from "../../contexts/squareDataContext";
+import SquareDataContext from "../../contexts/SquareDataContext";
 import useDialog, { Dialog } from "../Dialog/Dialog";
 import { isSquareData } from "../square/squareUtils";
 import "./ImportButton.css";

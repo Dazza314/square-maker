@@ -1,6 +1,6 @@
 import { useDroppable } from "@dnd-kit/core";
 import { CSSProperties, useContext } from "react";
-import { SquareDataContext } from "../../contexts/squareDataContext";
+import SquareDataContext from "../../contexts/SquareDataContext";
 import { SquareDataKey } from "../../types";
 import DraggableImage from "./DraggableImage";
 import "./Droppable.css";

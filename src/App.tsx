@@ -14,10 +14,8 @@ import {
   generateSquareData,
   getKeyFromImageUrl,
 } from "./components/square/squareUtils";
-import {
-  SquareDataContext,
-  SquareDataContextProvider,
-} from "./contexts/squareDataContext";
+import SquareDataContext from "./contexts/SquareDataContext";
+import SquareDataContextProvider from "./contexts/SquareDataContextProvider";
 import { SquareDataKey } from "./types";
 
 function App() {

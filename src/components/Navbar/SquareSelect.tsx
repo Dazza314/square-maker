@@ -1,7 +1,7 @@
 import { ChangeEvent, useContext } from "react";
 import AddIcon from "../../assets/add.svg?react";
 import DeleteIcon from "../../assets/delete.svg?react";
-import { SquareDataContext } from "../../contexts/squareDataContext";
+import SquareDataContext from "../../contexts/SquareDataContext";
 import "./SquareSelect.css";
 
 function SquareSelect() {
