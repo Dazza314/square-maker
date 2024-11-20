@@ -1,7 +1,7 @@
 .load-dialog-container {
-    height: 70dvh;
-    width: 30dvw;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    gap: 1em;
+  height: 70dvh;
+  width: 30dvw;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 1em;
 }

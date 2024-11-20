@@ -1,31 +1,31 @@
 .staging-area-container {
-    display: grid;
-    grid-template-rows: auto 1fr;
-    overflow: auto;
-    padding: 0 1em 1em;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: auto;
+  padding: 0 1em 1em;
 }
 
 .staging-area-content {
-    overflow-y: auto;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    gap: 4px;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 4px;
 
-    img {
-        height: 200px;
-    }
+  img {
+    height: 200px;
+  }
 }
 
 .staging-area-content-wrapper {
-    overflow: hidden;
-    display: grid;
+  overflow: hidden;
+  display: grid;
 
-    border: 1px dashed white;
-    border-radius: 1em;
-    padding: 1em;
+  border: 1px dashed white;
+  border-radius: 1em;
+  padding: 1em;
 
-    @media (prefers-color-scheme: light) {
-        border: 1px dashed black;
-    }
+  @media (prefers-color-scheme: light) {
+    border: 1px dashed black;
+  }
 }

@@ -1,13 +1,11 @@
-import { Range } from "./utilTypes"
+import { Range } from "./utilTypes";
 
 export type ItemInfo = {
-    imageUrl: string
-}
+  imageUrl: string;
+};
 
-export type SquareData =
-    { [Key in Range<0, 29>[number]]: ItemInfo | null }
-    & {
-        stagingArea: ItemInfo[]
-    }
+export type SquareData = { [Key in Range<0, 29>[number]]: ItemInfo | null } & {
+  stagingArea: ItemInfo[];
+};
 
-export type SquareDataKey = keyof SquareData | "deleteZone"
+export type SquareDataKey = keyof SquareData | "deleteZone";

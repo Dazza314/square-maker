@@ -1,11 +1,11 @@
 .delete-zone {
-    border: 2px dashed red;
-    border-radius: 1em;
-    padding: 1em;
-    display: grid;
-    place-items: center;
+  border: 2px dashed red;
+  border-radius: 1em;
+  padding: 1em;
+  display: grid;
+  place-items: center;
 
-    img {
-        height: 2em;
-    }
+  img {
+    height: 2em;
+  }
 }

@@ -3,13 +3,15 @@ import DeleteIcon from "../../assets/delete.png";
 import "./DeleteZone.css";
 
 function DeleteZone() {
-    const { setNodeRef } = useDroppable({
-        id: "deleteZone",
-    });
+  const { setNodeRef } = useDroppable({
+    id: "deleteZone",
+  });
 
-    return <div className="delete-zone" ref={setNodeRef}>
-        <img src={DeleteIcon} />
+  return (
+    <div className="delete-zone" ref={setNodeRef}>
+      <img src={DeleteIcon} />
     </div>
+  );
 }
 
-export default DeleteZone
+export default DeleteZone;

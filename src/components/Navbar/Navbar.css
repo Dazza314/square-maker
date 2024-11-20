@@ -1,6 +1,6 @@
 .navbar {
-    padding: 0 1em 1em;
-    display: grid;
-    grid-template-rows: repeat(6, auto) 1fr;
-    gap: 1em;
+  padding: 0 1em 1em;
+  display: grid;
+  grid-template-rows: repeat(6, auto) 1fr;
+  gap: 1em;
 }

@@ -1,65 +1,83 @@
-import { DndContext, DragEndEvent, DragOverlay, DragStartEvent } from "@dnd-kit/core"
-import { useState } from "react"
-import { useSessionStorage } from "usehooks-ts"
-import "./App.css"
-import Navbar from "./components/Navbar/Navbar"
-import DraggingImage from "./components/square/DraggingImage"
-import SquareContent from "./components/square/SquareContent"
-import { generateSquareData, getKeyFromImageUrl } from "./components/square/squareUtils"
-import { generateEmptySquareData, SquareContentProvider } from "./contexts/squareContext"
-import { SquareData, SquareDataKey } from "./types"
+import {
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
+} from "@dnd-kit/core";
+import { useState } from "react";
+import { useSessionStorage } from "usehooks-ts";
+import "./App.css";
+import Navbar from "./components/Navbar/Navbar";
+import DraggingImage from "./components/square/DraggingImage";
+import SquareContent from "./components/square/SquareContent";
+import {
+  generateSquareData,
+  getKeyFromImageUrl,
+} from "./components/square/squareUtils";
+import {
+  generateEmptySquareData,
+  SquareContentProvider,
+} from "./contexts/squareContext";
+import { SquareData, SquareDataKey } from "./types";
 
-const DEFAULT_KEY = "square-maker-0"
+const DEFAULT_KEY = "square-maker-0";
 
 function App() {
-  const [squareData, setSquareData] = useSessionStorage<SquareData>(DEFAULT_KEY, generateEmptySquareData)
+  const [squareData, setSquareData] = useSessionStorage<SquareData>(
+    DEFAULT_KEY,
+    generateEmptySquareData,
+  );
   const [activeId, setActiveId] = useState<string | number | null>(null);
-  const [zoneFromWhichActiveIdComesFrom, setZoneFromWhichActiveIdComesFrom] = useState<SquareDataKey | null>(null)
+  const [zoneFromWhichActiveIdComesFrom, setZoneFromWhichActiveIdComesFrom] =
+    useState<SquareDataKey | null>(null);
 
   return (
     <SquareContentProvider
-      squareData={squareData} setSquareData={setSquareData}
+      squareData={squareData}
+      setSquareData={setSquareData}
     >
       <h1 className="title">Square maker</h1>
-      <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd} autoScroll={false}>
+      <DndContext
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        autoScroll={false}
+      >
         <Navbar />
         <SquareContent />
-        {zoneFromWhichActiveIdComesFrom === "stagingArea" ?
-          <DragOverlay
-            dropAnimation={null}
-          >
+        {zoneFromWhichActiveIdComesFrom === "stagingArea" ? (
+          <DragOverlay dropAnimation={null}>
             {typeof activeId === "string" ? (
               <DraggingImage imageUrl={activeId} />
             ) : null}
-          </DragOverlay> : null
-        }
+          </DragOverlay>
+        ) : null}
       </DndContext>
     </SquareContentProvider>
-
-  )
+  );
 
   function handleDragEnd(event: DragEndEvent) {
-    setActiveId(null)
-    setZoneFromWhichActiveIdComesFrom(null)
-    setSquareData(prev => {
+    setActiveId(null);
+    setZoneFromWhichActiveIdComesFrom(null);
+    setSquareData((prev) => {
       if (event.over) {
-        return generateSquareData(prev, event.active.id, event.over.id as SquareDataKey)
+        return generateSquareData(
+          prev,
+          event.active.id,
+          event.over.id as SquareDataKey,
+        );
+      } else {
+        return prev;
       }
-      else {
-        return prev
-      }
-    })
+    });
   }
 
   function handleDragStart(event: DragStartEvent) {
     setActiveId(event.active.id);
     if (typeof event.active.id === "string") {
-      const zone = getKeyFromImageUrl(event.active.id, squareData)
-      setZoneFromWhichActiveIdComesFrom(zone)
+      const zone = getKeyFromImageUrl(event.active.id, squareData);
+      setZoneFromWhichActiveIdComesFrom(zone);
     }
   }
-
-
 }
 
-export default App
+export default App;

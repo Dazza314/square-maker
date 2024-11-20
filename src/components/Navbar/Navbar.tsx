@@ -9,16 +9,18 @@ import "./Navbar.css";
 import SaveToClipboardButton from "./SaveToClipboardButton";
 
 function Navbar() {
-    const { active } = useDndContext();
-    return <div className="navbar">
-        <DownloadSquareButton />
-        <CopySquareToClipboardButton />
-        <DeleteAllButton />
-        <DeleteAllExtraImagesButton />
-        <SaveToClipboardButton />
-        <ImportButton />
-        {active ? <DeleteZone /> : null}
+  const { active } = useDndContext();
+  return (
+    <div className="navbar">
+      <DownloadSquareButton />
+      <CopySquareToClipboardButton />
+      <DeleteAllButton />
+      <DeleteAllExtraImagesButton />
+      <SaveToClipboardButton />
+      <ImportButton />
+      {active ? <DeleteZone /> : null}
     </div>
+  );
 }
 
-export default Navbar
+export default Navbar;
