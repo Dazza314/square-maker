@@ -20,7 +20,7 @@ export function storeBlob(
   db: IDBDatabase,
   storeName: string,
   id: string,
-  blob: Blob
+  blob: Blob,
 ) {
   return new Promise<void>((resolve, reject) => {
     const transaction = db.transaction(storeName, "readwrite");

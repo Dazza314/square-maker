@@ -44,13 +44,15 @@ function Dnd() {
       >
         <Navbar />
         <SquareContent />
-        {zoneFromWhichActiveIdComesFrom === "stagingArea" ? (
-          <DragOverlay dropAnimation={null}>
-            {typeof activeId === "string" ? (
-              <DraggingImage imageUrl={activeId} />
-            ) : null}
-          </DragOverlay>
-        ) : null}
+        {zoneFromWhichActiveIdComesFrom === "stagingArea"
+          ? (
+            <DragOverlay dropAnimation={null}>
+              {typeof activeId === "string"
+                ? <DraggingImage imageUrl={activeId} />
+                : null}
+            </DragOverlay>
+          )
+          : null}
       </DndContext>
     </SquareEventHandler>
   );

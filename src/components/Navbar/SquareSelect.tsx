@@ -30,9 +30,7 @@ function SquareSelect() {
   return (
     <div className="square-select-container">
       <select value={currentKey} onChange={onSquareSelect}>
-        {savedSqaureKeys.map((key) => (
-          <option key={key}>{key}</option>
-        ))}
+        {savedSqaureKeys.map((key) => <option key={key}>{key}</option>)}
       </select>
       <button onClick={onNewClick}>
         <AddIcon />

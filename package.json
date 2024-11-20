@@ -8,8 +8,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "prettier": "npx prettier --write \"./**/*.{ts,tsx,json,css,html}\""
+    "preview": "vite preview"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",

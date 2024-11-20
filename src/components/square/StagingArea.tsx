@@ -26,11 +26,11 @@ function StagingArea() {
           {itemInfos.length === 0
             ? "Drop or paste images here"
             : itemInfos.map((itemInfo) => (
-                <DraggableImage
-                  key={itemInfo.imageUrl}
-                  imageUrl={itemInfo.imageUrl}
-                />
-              ))}
+              <DraggableImage
+                key={itemInfo.imageUrl}
+                imageUrl={itemInfo.imageUrl}
+              />
+            ))}
         </div>
       </div>
     </div>
