@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { SquareEventContext } from "../../contexts/squareEventContext";
+import { SquareDataContext } from "../../contexts/squareDataContext";
 
 function SaveToClipboardButton() {
-  const { squareData } = useContext(SquareEventContext);
+  const { squareData } = useContext(SquareDataContext);
 
   function onClick() {
     navigator.clipboard.writeText(JSON.stringify(squareData));

@@ -1,11 +1,11 @@
 import { useContext, useRef, useState } from "react";
-import { SquareEventContext } from "../../contexts/squareEventContext";
+import { SquareDataContext } from "../../contexts/squareDataContext";
 import useDialog, { Dialog } from "../Dialog/Dialog";
 import { isSquareData } from "../square/squareUtils";
 import "./ImportButton.css";
 
 function ImportButton() {
-  const { setSquareData } = useContext(SquareEventContext);
+  const { setSquareData } = useContext(SquareDataContext);
   const [label, setLabel] = useState("Import");
 
   const [text, setText] = useState("");

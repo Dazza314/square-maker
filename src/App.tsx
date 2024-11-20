@@ -9,6 +9,7 @@ import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import DraggingImage from "./components/square/DraggingImage";
 import SquareContent from "./components/square/SquareContent";
+import { SquareEventHandler } from "./components/square/squareEventhandler";
 import {
   generateSquareData,
   getKeyFromImageUrl,
@@ -17,7 +18,6 @@ import {
   SquareDataContext,
   SquareDataContextProvider,
 } from "./contexts/squareDataContext";
-import { SquareEventHandler } from "./contexts/squareEventContext";
 import { SquareDataKey } from "./types";
 
 function App() {

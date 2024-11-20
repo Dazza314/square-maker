@@ -1,6 +1,6 @@
 import { useDroppable } from "@dnd-kit/core";
 import { CSSProperties, useContext } from "react";
-import { SquareEventContext } from "../../contexts/squareEventContext";
+import { SquareDataContext } from "../../contexts/squareDataContext";
 import DraggableImage from "./DraggableImage";
 import "./StagingArea.css";
 
@@ -9,7 +9,7 @@ function StagingArea() {
     id: "stagingArea",
   });
 
-  const { squareData } = useContext(SquareEventContext);
+  const { squareData } = useContext(SquareDataContext);
 
   const style: CSSProperties = {
     borderColor: isOver ? "#C5D3E8" : undefined,

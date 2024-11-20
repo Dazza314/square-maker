@@ -1,7 +1,7 @@
 import { PropsWithChildren, useContext, useEffect } from "react";
-import { getKeyFromImageUrl } from "../components/square/squareUtils";
-import { SquareData } from "../types";
-import { SquareDataContext } from "./squareDataContext";
+import { SquareDataContext } from "../../contexts/squareDataContext";
+import { SquareData } from "../../types";
+import { getKeyFromImageUrl } from "./squareUtils";
 
 export function SquareEventHandler({ children }: PropsWithChildren) {
   const { setSquareData } = useContext(SquareDataContext);
