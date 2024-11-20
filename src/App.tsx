@@ -16,8 +16,8 @@ import {
 } from "./components/square/squareUtils";
 import {
   generateEmptySquareData,
-  SquareContentProvider,
-} from "./contexts/squareContext";
+  SquareEventContextProvider,
+} from "./contexts/squareEventContext";
 import { SquareData, SquareDataKey } from "./types";
 
 const DEFAULT_KEY = "square-maker-0";
@@ -32,7 +32,7 @@ function App() {
     useState<SquareDataKey | null>(null);
 
   return (
-    <SquareContentProvider
+    <SquareEventContextProvider
       squareData={squareData}
       setSquareData={setSquareData}
     >
@@ -52,7 +52,7 @@ function App() {
           </DragOverlay>
         ) : null}
       </DndContext>
-    </SquareContentProvider>
+    </SquareEventContextProvider>
   );
 
   function handleDragEnd(event: DragEndEvent) {

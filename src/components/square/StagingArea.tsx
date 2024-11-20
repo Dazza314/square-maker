@@ -1,6 +1,6 @@
 import { useDroppable } from "@dnd-kit/core";
 import { CSSProperties, useContext } from "react";
-import { SquareContext } from "../../contexts/squareContext";
+import { SquareEventContext } from "../../contexts/squareEventContext";
 import DraggableImage from "./DraggableImage";
 import "./StagingArea.css";
 
@@ -9,7 +9,7 @@ function StagingArea() {
     id: "stagingArea",
   });
 
-  const { squareData } = useContext(SquareContext);
+  const { squareData } = useContext(SquareEventContext);
 
   const style: CSSProperties = {
     borderColor: isOver ? "#C5D3E8" : undefined,
@@ -26,11 +26,11 @@ function StagingArea() {
           {itemInfos.length === 0
             ? "Drop or paste images here"
             : itemInfos.map((itemInfo) => (
-                <DraggableImage
-                  key={itemInfo.imageUrl}
-                  imageUrl={itemInfo.imageUrl}
-                />
-              ))}
+              <DraggableImage
+                key={itemInfo.imageUrl}
+                imageUrl={itemInfo.imageUrl}
+              />
+            ))}
         </div>
       </div>
     </div>

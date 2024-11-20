@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { SquareContext } from "../../contexts/squareContext";
+import { SquareEventContext } from "../../contexts/squareEventContext";
 
 function DeleteAllExtraImagesButton() {
-  const { setSquareData } = useContext(SquareContext);
+  const { setSquareData } = useContext(SquareEventContext);
 
   function onClick() {
     setSquareData((prev) => ({ ...prev, stagingArea: [] }));

@@ -1,6 +1,6 @@
 import { useDroppable } from "@dnd-kit/core";
 import { CSSProperties, useContext } from "react";
-import { SquareContext } from "../../contexts/squareContext";
+import { SquareEventContext } from "../../contexts/squareEventContext";
 import { SquareDataKey } from "../../types";
 import DraggableImage from "./DraggableImage";
 import "./Droppable.css";
@@ -14,7 +14,7 @@ function Droppable({ dropId }: Props) {
     id: dropId,
   });
 
-  const { squareData } = useContext(SquareContext);
+  const { squareData } = useContext(SquareEventContext);
 
   const itemInfo = squareData[dropId];
 

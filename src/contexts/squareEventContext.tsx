@@ -45,21 +45,21 @@ export function generateEmptySquareData(): SquareData {
   };
 }
 
-type SquareContextType = {
+type SquareEventContextType = {
   squareData: SquareData;
   setSquareData: Dispatch<SetStateAction<SquareData>>;
 };
 
-export const SquareContext = createContext<SquareContextType>({
+export const SquareEventContext = createContext<SquareEventContextType>({
   squareData: generateEmptySquareData(),
-  setSquareData: () => {},
+  setSquareData: () => { },
 });
 
-export function SquareContentProvider({
+export function SquareEventContextProvider({
   squareData,
   setSquareData,
   children,
-}: PropsWithChildren<SquareContextType>) {
+}: PropsWithChildren<SquareEventContextType>) {
   useEffect(() => {
     function pasteListener(e: ClipboardEvent) {
       for (const dataTransferItem of e.clipboardData?.items ?? []) {
@@ -116,7 +116,7 @@ export function SquareContentProvider({
   );
 
   return (
-    <SquareContext.Provider value={value}>{children}</SquareContext.Provider>
+    <SquareEventContext.Provider value={value}>{children}</SquareEventContext.Provider>
   );
 }
 
