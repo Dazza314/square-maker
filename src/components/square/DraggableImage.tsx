@@ -15,6 +15,19 @@ function DraggableImage({ imageUrl }: Props) {
     }
     : undefined;
 
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...listeners}
+      {...attributes}
+    >
+      <DraggableImageContent imageUrl={imageUrl} />
+    </div>
+  );
+}
+
+function DraggableImageContent({ imageUrl }: Props) {
   const [loading, proxyUrl] = useProxyImageUrl(imageUrl);
 
   if (loading || proxyUrl === null) {
@@ -23,11 +36,7 @@ function DraggableImage({ imageUrl }: Props) {
 
   return (
     <img
-      ref={setNodeRef}
-      style={style}
       src={proxyUrl}
-      {...listeners}
-      {...attributes}
     />
   );
 }

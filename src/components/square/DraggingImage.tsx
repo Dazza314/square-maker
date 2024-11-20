@@ -6,13 +6,26 @@ type Props = {
 };
 
 function DraggingImage({ imageUrl }: Props) {
+  return (
+    <div>
+      <DraggingImageContent imageUrl={imageUrl} />
+    </div>
+  );
+}
+
+function DraggingImageContent({ imageUrl }: Props) {
   const [loading, proxyUrl] = useProxyImageUrl(imageUrl);
 
   if (loading || proxyUrl === null) {
     return <ImageLoading />;
   }
 
-  return <img src={proxyUrl} style={{ height: 200 }} />;
+  return (
+    <img
+      style={{ height: 200 }}
+      src={proxyUrl}
+    />
+  );
 }
 
 export default DraggingImage;
