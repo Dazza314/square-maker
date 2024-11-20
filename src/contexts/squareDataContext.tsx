@@ -7,6 +7,8 @@ import {
   useMemo,
 } from "react";
 import { useSessionStorage } from "usehooks-ts";
+import { getAllImageIds } from "../components/square/squareUtils";
+import { deleteImages } from "../db/imageStore";
 import { SquareData } from "../types";
 
 export function generateEmptySquareData(): SquareData {
@@ -99,13 +101,20 @@ export function SquareDataContextProvider({ children }: PropsWithChildren) {
       console.warn("Cannot delete last item");
       return;
     }
+    const imageIds = getAllImageIds(squareData);
+    deleteImages(imageIds);
     sessionStorage.removeItem(currentKey.toString());
-    const index = keys.indexOf(currentKey);
-    if (index === keys.length - 1) {
-      setCurrentKey(keys[index - 1]);
-    }
-    setKeys((prev) => prev.toSpliced(index, 1));
-  }, [keys, currentKey]);
+    setKeys((prev) => {
+      const index = prev.indexOf(currentKey);
+      const newKeys = prev.toSpliced(index, 1);
+      if (index === newKeys.length) {
+        setCurrentKey(newKeys[index - 1]);
+      } else {
+        setCurrentKey(newKeys[index]);
+      }
+      return newKeys;
+    });
+  }, [keys, currentKey, squareData]);
 
   const value = useMemo<SquareDataContextType>(
     () => ({

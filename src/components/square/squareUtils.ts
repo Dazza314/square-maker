@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { deleteImage } from "../../db/imageStore";
 import { ItemInfo, SquareData, SquareDataKey } from "../../types";
 import { Range } from "../../utilTypes";
 
@@ -51,6 +52,7 @@ export function generateSquareData(
   }
 
   if (movedItemNewLocation === "deleteZone") {
+    deleteFromDbIfNecessary(movedItemId);
     if (itemOriginalLocation === "stagingArea") {
       const stagingAreaIndex = previousSquareData.stagingArea.findIndex(
         (x) => x.imageUrl === movedItemId,
@@ -126,6 +128,12 @@ export function generateSquareData(
   };
 }
 
+function deleteFromDbIfNecessary(movedItemId: string) {
+  if (isImageId(movedItemId)) {
+    void deleteImage(movedItemId);
+  }
+}
+
 function isItemInfo(value: any): value is ItemInfo {
   return value && typeof value.imageUrl === "string";
 }
@@ -154,4 +162,28 @@ export function isSquareData(value: any): value is SquareData {
   }
 
   return true;
+}
+
+export function getAllStagingAreaImageIds(square: SquareData) {
+  return square.stagingArea.reduce<string[]>((acc, curr) => {
+    if (isImageId(curr.imageUrl)) {
+      acc.push(curr.imageUrl);
+    }
+    return acc;
+  }, []);
+}
+
+export function getAllImageIds(square: SquareData) {
+  return [Object.values(square), ...square.stagingArea].reduce<string[]>(
+    (acc, curr) => {
+      if (Array.isArray(curr)) {
+        return acc;
+      }
+      if (isImageId(curr.imageUrl)) {
+        acc.push(curr.imageUrl);
+      }
+      return acc;
+    },
+    [],
+  );
 }

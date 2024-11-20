@@ -87,3 +87,19 @@ export function deleteBlob(db: IDBDatabase, storeName: string, id: string) {
     };
   });
 }
+
+export function deleteBlobs(db: IDBDatabase, storeName: string, ids: string[]) {
+  return new Promise<void>((resolve, reject) => {
+    const transaction = db.transaction(storeName, "readwrite");
+    const store = transaction.objectStore(storeName);
+    ids.forEach((id) => {
+      store.delete(id);
+    });
+
+    transaction.oncomplete = () => resolve();
+    transaction.onerror = (event) => {
+      const target = event.target as IDBRequest;
+      reject(target.error);
+    };
+  });
+}
