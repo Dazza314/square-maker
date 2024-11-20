@@ -53,6 +53,6 @@
 
 @media (prefers-color-scheme: light) {
     .square-content>div {
-        background-color: white;
+        background-color: #dddddd;
     }
 }
