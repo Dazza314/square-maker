@@ -30,19 +30,6 @@ export function generateSquareData(
     movedItemId,
     previousSquareData
   );
-  if (
-    itemOriginalLocation !== null &&
-    movedItemNewLocation !== "stagingArea" &&
-    movedItemNewLocation !== "deleteZone" &&
-    previousSquareData[movedItemNewLocation]
-  ) {
-    // Swap
-    return {
-      ...previousSquareData,
-      [movedItemNewLocation]: { imageUrl: movedItemId },
-      [itemOriginalLocation]: previousSquareData[movedItemNewLocation],
-    };
-  }
 
   if (itemOriginalLocation === null) {
     return previousSquareData;
@@ -57,13 +44,14 @@ export function generateSquareData(
       const stagingAreaIndex = previousSquareData.stagingArea.findIndex(
         (x) => x.imageUrl === movedItemId
       );
-      if (stagingAreaIndex >= 0) {
-        const newStagingArea = previousSquareData.stagingArea.toSpliced(
-          stagingAreaIndex,
-          1
-        );
-        return { ...previousSquareData, stagingArea: newStagingArea };
+      if (stagingAreaIndex === -1) {
+        return previousSquareData;
       }
+      const newStagingArea = previousSquareData.stagingArea.toSpliced(
+        stagingAreaIndex,
+        1
+      );
+      return { ...previousSquareData, stagingArea: newStagingArea };
     } else {
       return { ...previousSquareData, [itemOriginalLocation]: null };
     }
@@ -73,17 +61,31 @@ export function generateSquareData(
     const stagingAreaIndex = previousSquareData.stagingArea.findIndex(
       (x) => x.imageUrl === movedItemId
     );
-    if (stagingAreaIndex >= 0) {
-      const newStagingArea = previousSquareData.stagingArea.toSpliced(
-        stagingAreaIndex,
-        1
-      );
+    if (stagingAreaIndex === -1) {
+      return previousSquareData;
+    }
+    const newStagingArea = previousSquareData.stagingArea.toSpliced(
+      stagingAreaIndex,
+      1
+    );
+    if (previousSquareData[movedItemNewLocation]) {
+      if (movedItemNewLocation === "stagingArea") {
+        return previousSquareData;
+      }
       return {
         ...previousSquareData,
         [movedItemNewLocation]: { imageUrl: movedItemId },
-        stagingArea: newStagingArea,
+        stagingArea: [
+          ...newStagingArea,
+          previousSquareData[movedItemNewLocation],
+        ],
       };
     }
+    return {
+      ...previousSquareData,
+      [movedItemNewLocation]: { imageUrl: movedItemId },
+      stagingArea: newStagingArea,
+    };
   }
 
   if (movedItemNewLocation === "stagingArea") {
@@ -95,6 +97,14 @@ export function generateSquareData(
       ...previousSquareData,
       stagingArea: newStagingArea,
       [itemOriginalLocation]: null,
+    };
+  }
+
+  if (previousSquareData[movedItemNewLocation]) {
+    return {
+      ...previousSquareData,
+      [movedItemNewLocation]: { imageUrl: movedItemId },
+      [itemOriginalLocation]: previousSquareData[movedItemNewLocation],
     };
   }
 
