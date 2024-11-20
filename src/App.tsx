@@ -4,8 +4,7 @@ import {
   DragOverlay,
   DragStartEvent,
 } from "@dnd-kit/core";
-import { useState } from "react";
-import { useSessionStorage } from "usehooks-ts";
+import { useContext, useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import DraggingImage from "./components/square/DraggingImage";
@@ -15,26 +14,28 @@ import {
   getKeyFromImageUrl,
 } from "./components/square/squareUtils";
 import {
-  generateEmptySquareData,
-  SquareEventContextProvider,
-} from "./contexts/squareEventContext";
-import { SquareData, SquareDataKey } from "./types";
-
-const DEFAULT_KEY = "square-maker-0";
+  SquareDataContext,
+  SquareDataContextProvider,
+} from "./contexts/squareDataContext";
+import { SquareEventHandler } from "./contexts/squareEventContext";
+import { SquareDataKey } from "./types";
 
 function App() {
-  const [squareData, setSquareData] = useSessionStorage<SquareData>(
-    DEFAULT_KEY,
-    generateEmptySquareData,
+  return (
+    <SquareDataContextProvider>
+      <Dnd />
+    </SquareDataContextProvider>
   );
+}
+
+function Dnd() {
+  const { squareData, setSquareData } = useContext(SquareDataContext);
   const [activeId, setActiveId] = useState<string | number | null>(null);
   const [zoneFromWhichActiveIdComesFrom, setZoneFromWhichActiveIdComesFrom] =
     useState<SquareDataKey | null>(null);
 
   return (
-    <SquareEventContextProvider
-      squareData={squareData}
-      setSquareData={setSquareData}
+    <SquareEventHandler
     >
       <h1 className="title">Square maker</h1>
       <DndContext
@@ -52,7 +53,7 @@ function App() {
           </DragOverlay>
         ) : null}
       </DndContext>
-    </SquareEventContextProvider>
+    </SquareEventHandler>
   );
 
   function handleDragEnd(event: DragEndEvent) {
