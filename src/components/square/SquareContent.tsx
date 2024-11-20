@@ -2,8 +2,6 @@ import Droppable from './Droppable';
 import "./SquareContent.css";
 import StagingArea from './StagingArea';
 
-
-
 function SquareContent() {
     const viewportHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
     const gridCellSize = Math.floor((viewportHeight - 140) / 24)
@@ -45,13 +43,6 @@ function SquareContent() {
         </div>
         <StagingArea />
     </>
-
-
-
 }
-
-
-
-
 
 export default SquareContent
