@@ -1,5 +1,5 @@
 import { PropsWithChildren, useCallback, useMemo } from "react";
-import { useSessionStorage } from "usehooks-ts";
+import { useLocalStorage } from "usehooks-ts";
 import { getAllImageIds } from "../components/square/squareUtils";
 import { deleteImages } from "../db/imageStore";
 import { SquareData } from "../types";
@@ -9,12 +9,12 @@ import SquareDataContext, {
 } from "./SquareDataContext";
 
 function SquareDataContextProvider({ children }: PropsWithChildren) {
-  const [currentKey, setCurrentKey] = useSessionStorage("square-key", 0);
-  const [keys, setKeys] = useSessionStorage<number[]>("square-keys", [
+  const [currentKey, setCurrentKey] = useLocalStorage("square-key", 0);
+  const [keys, setKeys] = useLocalStorage<number[]>("square-keys", [
     currentKey,
   ]);
 
-  const [squareData, setSquareData] = useSessionStorage<SquareData>(
+  const [squareData, setSquareData] = useLocalStorage<SquareData>(
     currentKey.toString(),
     generateEmptySquareData,
   );
@@ -46,7 +46,7 @@ function SquareDataContextProvider({ children }: PropsWithChildren) {
     }
     const imageIds = getAllImageIds(squareData);
     deleteImages(imageIds);
-    sessionStorage.removeItem(currentKey.toString());
+    localStorage.removeItem(currentKey.toString());
     setKeys((prev) => {
       const index = prev.indexOf(currentKey);
       const newKeys = prev.toSpliced(index, 1);
