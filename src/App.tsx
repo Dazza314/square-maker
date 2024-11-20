@@ -9,7 +9,7 @@ import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import DraggingImage from "./components/square/DraggingImage";
 import SquareContent from "./components/square/SquareContent";
-import { SquareEventHandler } from "./components/square/squareEventhandler";
+import { SquareEventHandler } from "./components/square/SquareEventHandler";
 import {
   generateSquareData,
   getKeyFromImageUrl,
