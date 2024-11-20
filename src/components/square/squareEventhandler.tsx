@@ -32,6 +32,7 @@ export function SquareEventHandler({ children }: PropsWithChildren) {
         imageUrl.match(/^https?:\/\/.+\.(png|jpg|jpeg|bmp|gif|webp)$/)
       ) {
         setSquareData((prev) => addNewImage(prev, imageUrl));
+        return;
       }
 
       for (let dataTransferItem of e.dataTransfer?.items ?? []) {
