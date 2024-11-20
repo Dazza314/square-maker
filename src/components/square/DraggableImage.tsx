@@ -1,9 +1,7 @@
 import { useDraggable } from "@dnd-kit/core";
-import { useEffect, useState } from "react";
-import { getImageUrl } from "../../db/imageStore";
 import { ItemInfo } from "../../types";
 import ImageLoading from "../Image/ImageLoading";
-import { isImageId } from "./squareUtils";
+import { useProxyImageUrl } from "./useProxyImageUrl";
 
 type Props = ItemInfo;
 
@@ -17,7 +15,7 @@ function DraggableImage({ imageUrl }: Props) {
       }
     : undefined;
 
-  const [loading, proxyUrl] = useProxyUrl(imageUrl);
+  const [loading, proxyUrl] = useProxyImageUrl(imageUrl);
 
   if (loading || proxyUrl === null) {
     return <ImageLoading />;
@@ -32,39 +30,6 @@ function DraggableImage({ imageUrl }: Props) {
       {...attributes}
     />
   );
-}
-
-export function useProxyUrl(
-  imageUrl: string
-): [isLoading: boolean, proxyUrl: string | null] {
-  const [proxyUrl, setProxyUrl] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchProxyUrl = async () => {
-      try {
-        const url = await getProxyUrl(imageUrl);
-        setProxyUrl(url);
-      } catch (error) {
-        console.error("Error fetching proxy URL:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (imageUrl) {
-      fetchProxyUrl();
-    }
-  }, [imageUrl]);
-
-  return [loading, proxyUrl];
-}
-
-async function getProxyUrl(imageUrl: string) {
-  if (isImageId(imageUrl)) {
-    return await getImageUrl(imageUrl);
-  }
-  return `/api/proxy-image?url=${encodeURIComponent(imageUrl)}`;
 }
 
 export default DraggableImage;
