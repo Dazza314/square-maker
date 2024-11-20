@@ -18,18 +18,21 @@ export function generateSquareData(previousSquareData: SquareData, movedItemId: 
     if (typeof movedItemId === "number") {
         return previousSquareData
     }
-    if (movedItemNewLocation !== "stagingArea" && movedItemNewLocation !== "deleteZone" && previousSquareData[movedItemNewLocation]) {
-        // Cannot drop into zone which already contains an image
-        return previousSquareData
+    
+    const itemOriginalLocation = getKeyFromImageUrl(movedItemId, previousSquareData)
+    if (itemOriginalLocation !== null && movedItemNewLocation !== "stagingArea" && movedItemNewLocation !== "deleteZone" && previousSquareData[movedItemNewLocation]) {
+        // Swap
+        return {...previousSquareData, [movedItemNewLocation]:{ imageUrl: movedItemId },[itemOriginalLocation]: previousSquareData[movedItemNewLocation]}
     }
 
-    const itemOriginalLocation = getKeyFromImageUrl(movedItemId, previousSquareData)
     if (itemOriginalLocation === null) {
         return previousSquareData
     }
+
     if (itemOriginalLocation === movedItemNewLocation) {
         return previousSquareData
     }
+
     if (movedItemNewLocation === "deleteZone") {
         if (itemOriginalLocation === "stagingArea") {
             const stagingAreaIndex = previousSquareData.stagingArea.findIndex(x => x.imageUrl === movedItemId)
@@ -41,6 +44,7 @@ export function generateSquareData(previousSquareData: SquareData, movedItemId: 
             return { ...previousSquareData, [itemOriginalLocation]: null }
         }
     }
+
     if (itemOriginalLocation === "stagingArea") {
         const stagingAreaIndex = previousSquareData.stagingArea.findIndex(x => x.imageUrl === movedItemId)
         if (stagingAreaIndex >= 0) {
@@ -48,10 +52,12 @@ export function generateSquareData(previousSquareData: SquareData, movedItemId: 
             return { ...previousSquareData, [movedItemNewLocation]: { imageUrl: movedItemId }, stagingArea: newStagingArea }
         }
     }
+
     if (movedItemNewLocation === "stagingArea") {
         const newStagingArea = [...previousSquareData.stagingArea, { imageUrl: movedItemId }]
         return { ...previousSquareData, stagingArea: newStagingArea, [itemOriginalLocation]: null }
     }
+
     return { ...previousSquareData, [movedItemNewLocation]: { imageUrl: movedItemId }, [itemOriginalLocation]: null }
 }
 
