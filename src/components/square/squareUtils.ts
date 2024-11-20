@@ -1,5 +1,16 @@
+import { v4 as uuidv4 } from "uuid";
 import { ItemInfo, SquareData, SquareDataKey } from "../../types";
 import { Range } from "../../utilTypes";
+
+const IMAGE_ID_PREFIX = "IMAGE_ID_PREFIX";
+
+export function generateImageId() {
+  return `${IMAGE_ID_PREFIX}-${uuidv4()}`;
+}
+
+export function isImageId(x: string) {
+  return x.startsWith(IMAGE_ID_PREFIX);
+}
 
 export function getKeyFromImageUrl(
   imageUrl: string,

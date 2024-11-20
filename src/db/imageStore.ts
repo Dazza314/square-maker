@@ -1,5 +1,5 @@
 import { IMAGE_STORE_NAME } from "./constants";
-import { deleteBlob, openDatabase, retrieveBlob, storeBlob } from "./db";
+import { deleteBlob, openDatabase, retrieveBlobUrl, storeBlob } from "./db";
 
 export async function storeImage(id: string, file: File) {
   try {
@@ -22,7 +22,7 @@ export async function deleteImage(id: string) {
 export async function getImageUrl(id: string) {
   try {
     const db = await openDatabase(IMAGE_STORE_NAME);
-    return await retrieveBlob(db, IMAGE_STORE_NAME, id);
+    return await retrieveBlobUrl(db, IMAGE_STORE_NAME, id);
   } catch (e) {
     console.error("Error", e);
     return null;

@@ -46,7 +46,11 @@ export function storeBlob(
   });
 }
 
-export function retrieveBlob(db: IDBDatabase, storeName: string, id: string) {
+export function retrieveBlobUrl(
+  db: IDBDatabase,
+  storeName: string,
+  id: string,
+) {
   return new Promise<string>((resolve, reject) => {
     const transaction = db.transaction(storeName, "readonly");
     const store = transaction.objectStore(storeName);

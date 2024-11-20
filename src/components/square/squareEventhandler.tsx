@@ -1,7 +1,8 @@
 import { PropsWithChildren, useContext, useEffect } from "react";
 import { SquareDataContext } from "../../contexts/squareDataContext";
+import { storeImage } from "../../db/imageStore";
 import { SquareData } from "../../types";
-import { getKeyFromImageUrl } from "./squareUtils";
+import { generateImageId, getKeyFromImageUrl } from "./squareUtils";
 
 export function SquareEventHandler({ children }: PropsWithChildren) {
   const { setSquareData } = useContext(SquareDataContext);
@@ -21,15 +22,28 @@ export function SquareEventHandler({ children }: PropsWithChildren) {
       }
     }
 
-    function dropListener(e: DragEvent) {
+    async function dropListener(e: DragEvent) {
       e.stopPropagation();
       e.preventDefault();
+
       const imageUrl = e.dataTransfer?.getData("URL");
       if (
         imageUrl &&
         imageUrl.match(/^https?:\/\/.+\.(png|jpg|jpeg|bmp|gif|webp)$/)
       ) {
         setSquareData((prev) => addNewImage(prev, imageUrl));
+      }
+
+      for (let dataTransferItem of e.dataTransfer?.items ?? []) {
+        if (dataTransferItem.type.startsWith("image")) {
+          const file = dataTransferItem.getAsFile();
+          if (file) {
+            const id = generateImageId();
+            await storeImage(id, file);
+            setSquareData((prev) => addNewImage(prev, id));
+            return;
+          }
+        }
       }
     }
 
