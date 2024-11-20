@@ -8,17 +8,10 @@ export function SquareEventHandler({ children }: PropsWithChildren) {
   const { setSquareData } = useContext(SquareDataContext);
 
   useEffect(() => {
-    function pasteListener(e: ClipboardEvent) {
-      for (const dataTransferItem of e.clipboardData?.items ?? []) {
-        if (dataTransferItem.type === "text/plain") {
-          dataTransferItem.getAsString((imageUrl) => {
-            if (
-              imageUrl.match(/^https?:\/\/.+\.(png|jpg|jpeg|bmp|gif|webp)$/)
-            ) {
-              setSquareData((prev) => addNewImage(prev, imageUrl));
-            }
-          });
-        }
+    async function pasteListener(e: ClipboardEvent) {
+      const imageUrl = await getImageUrl(e.clipboardData?.items);
+      if (imageUrl) {
+        setSquareData((prev) => addNewImage(prev, imageUrl));
       }
     }
 
@@ -53,16 +46,9 @@ export function SquareEventHandler({ children }: PropsWithChildren) {
       }
 
       // Last choice, we get the image blob
-      for (let dataTransferItem of e.dataTransfer?.items ?? []) {
-        if (dataTransferItem.type.startsWith("image")) {
-          const file = dataTransferItem.getAsFile();
-          if (file) {
-            const id = generateImageId();
-            await storeImage(id, file);
-            setSquareData((prev) => addNewImage(prev, id));
-            return;
-          }
-        }
+      const imageId = await getImageBlob(e.dataTransfer?.items);
+      if (imageId) {
+        setSquareData((prev) => addNewImage(prev, imageId));
       }
     }
 
@@ -87,6 +73,46 @@ export function SquareEventHandler({ children }: PropsWithChildren) {
   }, []);
 
   return children;
+}
+
+async function getImageUrl(
+  dataTransferItems: DataTransferItemList | undefined,
+) {
+  for (const dataTransferItem of dataTransferItems ?? []) {
+    if (dataTransferItem.type === "text/plain") {
+      const result = await new Promise<string | null>((resolve) =>
+        dataTransferItem.getAsString((imageUrl) => {
+          if (
+            imageUrl.match(/^https?:\/\/.+\.(png|jpg|jpeg|bmp|gif|webp)$/)
+          ) {
+            resolve(imageUrl);
+          }
+          resolve(null);
+        })
+      );
+      if (result) {
+        return result;
+      }
+    }
+  }
+  return null;
+}
+
+async function getImageBlob(
+  dataTransferItems: DataTransferItemList | undefined,
+) {
+  for (let dataTransferItem of dataTransferItems ?? []) {
+    console.log(dataTransferItem.type);
+    if (dataTransferItem.type.startsWith("image")) {
+      const file = dataTransferItem.getAsFile();
+      if (file) {
+        const id = generateImageId();
+        await storeImage(id, file);
+        return id;
+      }
+    }
+  }
+  return null;
 }
 
 function addNewImage(prevSquareData: SquareData, imageUrl: string) {
