@@ -1,6 +1,7 @@
 import { useDraggable } from "@dnd-kit/core";
 import { ItemInfo } from "../../types";
 import ImageLoading from "../Image/ImageLoading";
+import "./DraggableImage.css";
 import { useProxyImageUrl } from "./useProxyImageUrl";
 
 type Props = ItemInfo;
@@ -17,6 +18,7 @@ function DraggableImage({ imageUrl }: Props) {
 
   return (
     <div
+      className="image-container"
       ref={setNodeRef}
       style={style}
       {...listeners}
