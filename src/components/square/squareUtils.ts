@@ -3,7 +3,7 @@ import { Range } from "../../utilTypes";
 
 export function getKeyFromImageUrl(
   imageUrl: string,
-  square: SquareData
+  square: SquareData,
 ): keyof SquareData | null {
   for (let i = 0; i < 30; i++) {
     const j = i as Range<0, 29>[number];
@@ -20,7 +20,7 @@ export function getKeyFromImageUrl(
 export function generateSquareData(
   previousSquareData: SquareData,
   movedItemId: string | number,
-  movedItemNewLocation: SquareDataKey
+  movedItemNewLocation: SquareDataKey,
 ): SquareData {
   if (typeof movedItemId === "number") {
     return previousSquareData;
@@ -28,7 +28,7 @@ export function generateSquareData(
 
   const itemOriginalLocation = getKeyFromImageUrl(
     movedItemId,
-    previousSquareData
+    previousSquareData,
   );
 
   if (itemOriginalLocation === null) {
@@ -42,14 +42,14 @@ export function generateSquareData(
   if (movedItemNewLocation === "deleteZone") {
     if (itemOriginalLocation === "stagingArea") {
       const stagingAreaIndex = previousSquareData.stagingArea.findIndex(
-        (x) => x.imageUrl === movedItemId
+        (x) => x.imageUrl === movedItemId,
       );
       if (stagingAreaIndex === -1) {
         return previousSquareData;
       }
       const newStagingArea = previousSquareData.stagingArea.toSpliced(
         stagingAreaIndex,
-        1
+        1,
       );
       return { ...previousSquareData, stagingArea: newStagingArea };
     } else {
@@ -59,14 +59,14 @@ export function generateSquareData(
 
   if (itemOriginalLocation === "stagingArea") {
     const stagingAreaIndex = previousSquareData.stagingArea.findIndex(
-      (x) => x.imageUrl === movedItemId
+      (x) => x.imageUrl === movedItemId,
     );
     if (stagingAreaIndex === -1) {
       return previousSquareData;
     }
     const newStagingArea = previousSquareData.stagingArea.toSpliced(
       stagingAreaIndex,
-      1
+      1,
     );
     if (previousSquareData[movedItemNewLocation]) {
       if (movedItemNewLocation === "stagingArea") {

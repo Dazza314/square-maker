@@ -1,6 +1,8 @@
 import { useContext } from "react";
-import { generateEmptySquareData, SquareDataContext } from "../../contexts/squareDataContext";
-
+import {
+  generateEmptySquareData,
+  SquareDataContext,
+} from "../../contexts/squareDataContext";
 
 function DeleteAllButton() {
   const { setSquareData } = useContext(SquareDataContext);

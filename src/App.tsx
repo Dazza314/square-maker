@@ -35,8 +35,7 @@ function Dnd() {
     useState<SquareDataKey | null>(null);
 
   return (
-    <SquareEventHandler
-    >
+    <SquareEventHandler>
       <h1 className="title">Square maker</h1>
       <DndContext
         onDragStart={handleDragStart}

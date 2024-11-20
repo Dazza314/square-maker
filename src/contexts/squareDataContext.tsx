@@ -57,20 +57,19 @@ type SquareDataContextType = {
 
 export const SquareDataContext = createContext<SquareDataContextType>({
   squareData: generateEmptySquareData(),
-  setSquareData: () => { },
+  setSquareData: () => {},
   currentKey: 0,
   savedSquareKeys: [],
-  changeSquare: () => { },
-  newSquareKey: () => { },
-  removeCurrentSquareKey: () => { }
+  changeSquare: () => {},
+  newSquareKey: () => {},
+  removeCurrentSquareKey: () => {},
 });
 
 export function SquareDataContextProvider({ children }: PropsWithChildren) {
-  const [currentKey, setCurrentKey] = useSessionStorage(
-    "square-key",
-    0,
-  );
-  const [keys, setKeys] = useSessionStorage<number[]>("square-keys", [currentKey]);
+  const [currentKey, setCurrentKey] = useSessionStorage("square-key", 0);
+  const [keys, setKeys] = useSessionStorage<number[]>("square-keys", [
+    currentKey,
+  ]);
 
   const [squareData, setSquareData] = useSessionStorage<SquareData>(
     currentKey.toString(),
@@ -89,28 +88,24 @@ export function SquareDataContextProvider({ children }: PropsWithChildren) {
     [keys],
   );
 
-  const newSquareKey = useCallback(
-    () => {
-      const newKey = keys[keys.length - 1] + 1
-      setKeys((prev) => [...prev, newKey]);
-      setCurrentKey(newKey)
-    },
-    [keys],
-  );
+  const newSquareKey = useCallback(() => {
+    const newKey = keys[keys.length - 1] + 1;
+    setKeys((prev) => [...prev, newKey]);
+    setCurrentKey(newKey);
+  }, [keys]);
 
   const removeCurrentSquareKey = useCallback(() => {
     if (keys.length < 2) {
-      console.warn("Cannot delete last item")
-      return
+      console.warn("Cannot delete last item");
+      return;
     }
-    sessionStorage.removeItem(currentKey.toString())
-    const index = keys.indexOf(currentKey)
+    sessionStorage.removeItem(currentKey.toString());
+    const index = keys.indexOf(currentKey);
     if (index === keys.length - 1) {
-      setCurrentKey(keys[index - 1])
+      setCurrentKey(keys[index - 1]);
     }
-    setKeys(prev => prev.toSpliced(index, 1))
-
-  }, [keys, currentKey])
+    setKeys((prev) => prev.toSpliced(index, 1));
+  }, [keys, currentKey]);
 
   const value = useMemo<SquareDataContextType>(
     () => ({
@@ -120,7 +115,7 @@ export function SquareDataContextProvider({ children }: PropsWithChildren) {
       savedSquareKeys: keys,
       changeSquare,
       newSquareKey,
-      removeCurrentSquareKey
+      removeCurrentSquareKey,
     }),
     [setSquareData, squareData, currentKey, newSquareKey, changeSquare, keys],
   );
