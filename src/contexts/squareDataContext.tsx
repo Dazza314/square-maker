@@ -9,8 +9,6 @@ import {
 import { useSessionStorage } from "usehooks-ts";
 import { SquareData } from "../types";
 
-const DEFAULT_KEY = "square-maker-0";
-
 export function generateEmptySquareData(): SquareData {
   return {
     0: null,
@@ -50,33 +48,37 @@ export function generateEmptySquareData(): SquareData {
 type SquareDataContextType = {
   squareData: SquareData;
   setSquareData: Dispatch<SetStateAction<SquareData>>;
-  savedSqaureKeys: string[];
-  changeSquare: (key: string) => void;
-  newSquareKey: (key: string) => void;
+  savedSquareKeys: number[];
+  currentKey: number;
+  changeSquare: (key: number) => void;
+  newSquareKey: () => void;
+  removeCurrentSquareKey: () => void;
 };
 
 export const SquareDataContext = createContext<SquareDataContextType>({
   squareData: generateEmptySquareData(),
-  setSquareData: () => {},
-  savedSqaureKeys: [],
-  changeSquare: () => {},
-  newSquareKey: () => {},
+  setSquareData: () => { },
+  currentKey: 0,
+  savedSquareKeys: [],
+  changeSquare: () => { },
+  newSquareKey: () => { },
+  removeCurrentSquareKey: () => { }
 });
 
 export function SquareDataContextProvider({ children }: PropsWithChildren) {
   const [currentKey, setCurrentKey] = useSessionStorage(
     "square-key",
-    DEFAULT_KEY,
+    0,
   );
-  const [keys, setKeys] = useSessionStorage<string[]>("square-keys", []);
+  const [keys, setKeys] = useSessionStorage<number[]>("square-keys", [currentKey]);
 
   const [squareData, setSquareData] = useSessionStorage<SquareData>(
-    currentKey,
+    currentKey.toString(),
     generateEmptySquareData,
   );
 
   const changeSquare = useCallback(
-    (key: string) => {
+    (key: number) => {
       const keyIndex = keys.indexOf(key);
       if (keyIndex === -1) {
         console.warn(`No such key:${key} exists. Current keys: ${keys}`);
@@ -88,25 +90,39 @@ export function SquareDataContextProvider({ children }: PropsWithChildren) {
   );
 
   const newSquareKey = useCallback(
-    (key: string) => {
-      if (keys.includes(key)) {
-        console.warn(`Duplicate key: ${key} cannot be used`);
-        return;
-      }
-      setKeys((prev) => [...prev, key]);
+    () => {
+      const newKey = keys[keys.length - 1] + 1
+      setKeys((prev) => [...prev, newKey]);
+      setCurrentKey(newKey)
     },
     [keys],
   );
+
+  const removeCurrentSquareKey = useCallback(() => {
+    if (keys.length < 2) {
+      console.warn("Cannot delete last item")
+      return
+    }
+    sessionStorage.removeItem(currentKey.toString())
+    const index = keys.indexOf(currentKey)
+    if (index === keys.length - 1) {
+      setCurrentKey(keys[index - 1])
+    }
+    setKeys(prev => prev.toSpliced(index, 1))
+
+  }, [keys, currentKey])
 
   const value = useMemo<SquareDataContextType>(
     () => ({
       squareData,
       setSquareData,
-      savedSqaureKeys: keys,
+      currentKey,
+      savedSquareKeys: keys,
       changeSquare,
       newSquareKey,
+      removeCurrentSquareKey
     }),
-    [setSquareData, squareData, newSquareKey, changeSquare, keys],
+    [setSquareData, squareData, currentKey, newSquareKey, changeSquare, keys],
   );
 
   return (

@@ -7,11 +7,13 @@ import DownloadSquareButton from "./DownloadSquareButton";
 import ImportButton from "./ImportButton";
 import "./Navbar.css";
 import SaveToClipboardButton from "./SaveToClipboardButton";
+import SquareSelect from "./SquareSelect";
 
 function Navbar() {
   const { active } = useDndContext();
   return (
     <div className="navbar">
+      <SquareSelect />
       <DownloadSquareButton />
       <CopySquareToClipboardButton />
       <DeleteAllButton />
