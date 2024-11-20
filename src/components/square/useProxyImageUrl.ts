@@ -32,5 +32,8 @@ async function getProxyUrl(imageUrl: string) {
   if (isImageId(imageUrl)) {
     return await getImageUrl(imageUrl);
   }
+  if (imageUrl.startsWith("data:image")) {
+    return imageUrl;
+  }
   return `/api/proxy-image?url=${encodeURIComponent(imageUrl)}`;
 }

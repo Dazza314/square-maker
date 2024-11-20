@@ -26,6 +26,9 @@ export function SquareEventHandler({ children }: PropsWithChildren) {
       e.stopPropagation();
       e.preventDefault();
 
+      // Three step approach
+
+      // Ideally we can use the image's URL directly
       const imageUrl = e.dataTransfer?.getData("URL");
       if (
         imageUrl &&
@@ -35,6 +38,21 @@ export function SquareEventHandler({ children }: PropsWithChildren) {
         return;
       }
 
+      // Second choice is using the `src` of the image (e.g. for base64 encoded)
+      for (let dataTransferItem of e.dataTransfer?.items ?? []) {
+        if (dataTransferItem.type === "text/html") {
+          dataTransferItem.getAsString((html) => {
+            const src = new DOMParser().parseFromString(html, "text/html")
+              ?.querySelector("img")?.src;
+            if (src) {
+              setSquareData((prev) => addNewImage(prev, src));
+              return;
+            }
+          });
+        }
+      }
+
+      // Last choice, we get the image blob
       for (let dataTransferItem of e.dataTransfer?.items ?? []) {
         if (dataTransferItem.type.startsWith("image")) {
           const file = dataTransferItem.getAsFile();
