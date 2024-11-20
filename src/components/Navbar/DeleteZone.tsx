@@ -1,5 +1,5 @@
 import { useDroppable } from "@dnd-kit/core";
-import DeleteIcon from "../../assets/delete.png";
+import DeleteIcon from "../../assets/delete.svg?react";
 import "./DeleteZone.css";
 
 function DeleteZone() {
@@ -9,7 +9,7 @@ function DeleteZone() {
 
   return (
     <div className="delete-zone" ref={setNodeRef}>
-      <img src={DeleteIcon} />
+      <DeleteIcon />
     </div>
   );
 }
