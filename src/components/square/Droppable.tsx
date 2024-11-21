@@ -10,7 +10,7 @@ type Props = {
 };
 
 function Droppable({ dropId }: Props) {
-  const { isOver, setNodeRef, active } = useDroppable({
+  const { isOver, setNodeRef } = useDroppable({
     id: dropId,
   });
 
@@ -18,12 +18,8 @@ function Droppable({ dropId }: Props) {
 
   const itemInfo = squareData[dropId];
 
-  const isOverSelf = active?.id === itemInfo?.imageUrl;
-
-  const showBorder = isOver && !(itemInfo && !isOverSelf);
-
   const style: CSSProperties = {
-    outline: showBorder ? "1px solid #C5D3E8" : undefined,
+    outline: isOver ? "1px solid #C5D3E8" : undefined,
   };
 
   return (
