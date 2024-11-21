@@ -7,6 +7,7 @@ import DownloadSquareButton from "./DownloadSquareButton";
 import ImportButton from "./ImportButton";
 import "./Navbar.css";
 import SaveToClipboardButton from "./SaveToClipboardButton";
+import ScaleAdjust from "./ScaleAdjust";
 import SquareSelect from "./SquareSelect";
 
 function Navbar() {
@@ -14,6 +15,7 @@ function Navbar() {
   return (
     <div className="navbar">
       <SquareSelect />
+      <ScaleAdjust />
       <DownloadSquareButton />
       <CopySquareToClipboardButton />
       <DeleteAllButton />

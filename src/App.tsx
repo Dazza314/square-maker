@@ -14,6 +14,7 @@ import {
   generateSquareData,
   getKeyFromImageUrl,
 } from "./components/square/squareUtils";
+import ScaleContextProvider from "./contexts/ScaleContextProvider";
 import SquareDataContext from "./contexts/SquareDataContext";
 import SquareDataContextProvider from "./contexts/SquareDataContextProvider";
 import { SquareDataKey } from "./types";
@@ -21,7 +22,9 @@ import { SquareDataKey } from "./types";
 function App() {
   return (
     <SquareDataContextProvider>
-      <Dnd />
+      <ScaleContextProvider>
+        <Dnd />
+      </ScaleContextProvider>
     </SquareDataContextProvider>
   );
 }

@@ -1,13 +1,18 @@
+import { useContext } from "react";
+import ScaleContext from "../../contexts/ScaleContext";
 import Droppable from "./Droppable";
 import "./SquareContent.css";
 import StagingArea from "./StagingArea";
 
 function SquareContent() {
+  const { scale } = useContext(ScaleContext);
   const viewportHeight = Math.max(
     document.documentElement.clientHeight || 0,
     window.innerHeight || 0,
   );
-  const gridCellSize = Math.floor((viewportHeight - 140) / 24);
+
+  const gridCellSize = Math.floor((viewportHeight - 140) / 24 / scale);
+  const width = scale * gridCellSize;
 
   return (
     <>
@@ -16,7 +21,7 @@ function SquareContent() {
         className="square-content"
         style={{
           gridTemplateColumns: `repeat(24, ${gridCellSize}px)`,
-          gridTemplateRows: `repeat(24, ${gridCellSize}px)`,
+          gridTemplateRows: `repeat(24, ${width}px)`,
         }}
       >
         <Droppable dropId={0} />
