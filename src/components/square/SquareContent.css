@@ -1,4 +1,5 @@
 .square-content {
+  justify-self: center;
   display: grid;
   grid-auto-flow: column dense;
 

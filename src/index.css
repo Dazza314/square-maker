@@ -46,7 +46,7 @@ h1 {
 
 #root {
   display: grid;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: auto 1fr minmax(10%, 40%);
   grid-template-rows: auto 1fr;
   height: 100dvh;
 }

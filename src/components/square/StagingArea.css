@@ -3,6 +3,9 @@
   grid-template-rows: auto 1fr;
   overflow: auto;
   padding: 0 1em 1em;
+
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .staging-area-content {

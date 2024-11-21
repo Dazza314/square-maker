@@ -13,7 +13,7 @@ function ScaleAdjust() {
         <div>
             <input
                 type="range"
-                min={0.5}
+                min={0.6}
                 max={2}
                 step={0.1}
                 value={scale}
